@@ -1,0 +1,431 @@
+{
+  "nodes": [
+    {
+      "id": "Node0",
+      "label": "Início",
+      "type": "start"
+    },
+    {
+      "id": "Node1",
+      "label": "Ação: @injectable()",
+      "type": "action"
+    },
+    {
+      "id": "Node2",
+      "label": "Ação: export default class Deploy implements _Controller {",
+      "type": "action"
+    },
+    {
+      "id": "Node3",
+      "label": "Ação: readonly logger: Logger;",
+      "type": "action"
+    },
+    {
+      "id": "Node4",
+      "label": "Ação: readonly gitCommand: GitCommand;",
+      "type": "action"
+    },
+    {
+      "id": "Node5",
+      "label": "Ação: protected readonly branches = config.get<{ [k: string]: any }>('branches');",
+      "type": "action"
+    },
+    {
+      "id": "Node6",
+      "label": "Ação: constructor(",
+      "type": "action"
+    },
+    {
+      "id": "Node7",
+      "label": "Ação: @inject('logger') logger: Logger,",
+      "type": "action"
+    },
+    {
+      "id": "Node8",
+      "label": "Ação: @inject('command') @named('git') gitCommand: GitCommand,",
+      "type": "action"
+    },
+    {
+      "id": "Node9",
+      "label": "Ação: ) {",
+      "type": "action"
+    },
+    {
+      "id": "Node10",
+      "label": "Ação: this.logger = logger;",
+      "type": "action"
+    },
+    {
+      "id": "Node11",
+      "label": "Ação: this.gitCommand = gitCommand;",
+      "type": "action"
+    },
+    {
+      "id": "Node12",
+      "label": "Ação: }",
+      "type": "action"
+    },
+    {
+      "id": "Node13",
+      "label": "Ação: @exceptionHandle()",
+      "type": "action"
+    },
+    {
+      "id": "Node14",
+      "label": "Ação: async start(solicitation: Solicitation): Promise<Solicitation> {",
+      "type": "action"
+    },
+    {
+      "id": "Node15",
+      "label": "Ação: this.logger.info(`INICIANDO DEPLOY DO PROJETO ${solicitation.project.name}`);",
+      "type": "action"
+    },
+    {
+      "id": "Node16",
+      "label": "Ação: await this.gitCommand.clearBranch(solicitation);",
+      "type": "action"
+    },
+    {
+      "id": "Node17",
+      "label": "Ação: await this.gitCommand.execute({ args: `checkout ${this.gitCommand.getDefaultRevision()}`, silent: true }, solicitation);",
+      "type": "action"
+    },
+    {
+      "id": "Node18",
+      "label": "Ação: solicitation.fullPipeline = solicitation.fullPipeline || !(await this.gitCommand.isFastForward(solicitation));",
+      "type": "action"
+    },
+    {
+      "id": "Node19",
+      "label": "Ação: const diff = await this.gitCommand.getDiff(solicitation);",
+      "type": "action"
+    },
+    {
+      "id": "Node20",
+      "label": "Ação: solicitation.hasExistsDiffInPackage = (Object.keys(diff).length !== 0);",
+      "type": "action"
+    },
+    {
+      "id": "Node21",
+      "label": "Ação: const exampleSettingsFile = config.get<string[]>('deploy.file_app_settings');",
+      "type": "action"
+    },
+    {
+      "id": "Node22",
+      "label": "Laço: for (const filePath of exampleSettingsFile) {",
+      "type": "loop"
+    },
+    {
+      "id": "Node23",
+      "label": "Condicional: if (diff[filePath] && !solicitation.settingsAppendment) {",
+      "type": "condition"
+    },
+    {
+      "id": "Node24",
+      "label": "Ação: solicitation.success = false;",
+      "type": "action"
+    },
+    {
+      "id": "Node25",
+      "label": "Ação: solicitation.status = STATUS.ERROR;",
+      "type": "action"
+    },
+    {
+      "id": "Node26",
+      "label": "Ação: solicitation.message.push(`Settings file \"${filePath}\" changed on diff - settings appendment is mandatory but not included on this deploy`, 'error');",
+      "type": "action"
+    },
+    {
+      "id": "Node27",
+      "label": "Ação: }",
+      "type": "action"
+    },
+    {
+      "id": "Node28",
+      "label": "Ação: }",
+      "type": "action"
+    },
+    {
+      "id": "Node29",
+      "label": "Ação: this.logger.info(`Atualizando branch local ${this.gitCommand.getDefaultRevision()} com a origin/master`);",
+      "type": "action"
+    },
+    {
+      "id": "Node30",
+      "label": "Condicional: if (this.gitCommand.getDefaultRevision() === this.branches.production) return solicitation;",
+      "type": "condition"
+    },
+    {
+      "id": "Node31",
+      "label": "Ação: await this.gitCommand.execute({ args: `merge origin/${this.branches.production}` }, solicitation);",
+      "type": "action"
+    },
+    {
+      "id": "Node32",
+      "label": "Ação: const messageResultMerge = solicitation.message.getFormatMessage();",
+      "type": "action"
+    },
+    {
+      "id": "Node33",
+      "label": "Condicional: if (messageResultMerge.includes('CONFLICT')) {",
+      "type": "condition"
+    },
+    {
+      "id": "Node34",
+      "label": "Ação: await this.gitCommand.clearBranch(solicitation);",
+      "type": "action"
+    },
+    {
+      "id": "Node35",
+      "label": "Ação: solicitation.message.push('Conflito em atualizar a branch com a master.', 'error');",
+      "type": "action"
+    },
+    {
+      "id": "Node36",
+      "label": "Ação: solicitation.success = false;",
+      "type": "action"
+    },
+    {
+      "id": "Node37",
+      "label": "Ação: solicitation.status = STATUS.ERROR;",
+      "type": "action"
+    },
+    {
+      "id": "Node38",
+      "label": "Fim: return solicitation;",
+      "type": "end"
+    },
+    {
+      "id": "Node39",
+      "label": "Ação: }",
+      "type": "action"
+    },
+    {
+      "id": "Node40",
+      "label": "Fim: return solicitation;",
+      "type": "end"
+    },
+    {
+      "id": "Node41",
+      "label": "Ação: }",
+      "type": "action"
+    },
+    {
+      "id": "Node42",
+      "label": "Ação: }",
+      "type": "action"
+    }
+  ],
+  "edges": [
+    {
+      "from": "Node0",
+      "to": "Node1",
+      "label": "Linha 10"
+    },
+    {
+      "from": "Node1",
+      "to": "Node2",
+      "label": "Linha 11"
+    },
+    {
+      "from": "Node2",
+      "to": "Node3",
+      "label": "Linha 12"
+    },
+    {
+      "from": "Node3",
+      "to": "Node4",
+      "label": "Linha 13"
+    },
+    {
+      "from": "Node4",
+      "to": "Node5",
+      "label": "Linha 14"
+    },
+    {
+      "from": "Node5",
+      "to": "Node6",
+      "label": "Linha 16"
+    },
+    {
+      "from": "Node6",
+      "to": "Node7",
+      "label": "Linha 17"
+    },
+    {
+      "from": "Node7",
+      "to": "Node8",
+      "label": "Linha 18"
+    },
+    {
+      "from": "Node8",
+      "to": "Node9",
+      "label": "Linha 19"
+    },
+    {
+      "from": "Node9",
+      "to": "Node10",
+      "label": "Linha 20"
+    },
+    {
+      "from": "Node10",
+      "to": "Node11",
+      "label": "Linha 21"
+    },
+    {
+      "from": "Node11",
+      "to": "Node12",
+      "label": "Linha 22"
+    },
+    {
+      "from": "Node12",
+      "to": "Node13",
+      "label": "Linha 24"
+    },
+    {
+      "from": "Node13",
+      "to": "Node14",
+      "label": "Linha 25"
+    },
+    {
+      "from": "Node14",
+      "to": "Node15",
+      "label": "Linha 26"
+    },
+    {
+      "from": "Node15",
+      "to": "Node16",
+      "label": "Linha 28"
+    },
+    {
+      "from": "Node16",
+      "to": "Node17",
+      "label": "Linha 29"
+    },
+    {
+      "from": "Node17",
+      "to": "Node18",
+      "label": "Linha 31"
+    },
+    {
+      "from": "Node18",
+      "to": "Node19",
+      "label": "Linha 33"
+    },
+    {
+      "from": "Node19",
+      "to": "Node20",
+      "label": "Linha 34"
+    },
+    {
+      "from": "Node20",
+      "to": "Node21",
+      "label": "Linha 36"
+    },
+    {
+      "from": "Node21",
+      "to": "Node22",
+      "label": "Linha 37"
+    },
+    {
+      "from": "Node22",
+      "to": "Node23",
+      "label": "Linha 38"
+    },
+    {
+      "from": "Node23",
+      "to": "Node24",
+      "label": "Linha 39"
+    },
+    {
+      "from": "Node24",
+      "to": "Node25",
+      "label": "Linha 40"
+    },
+    {
+      "from": "Node25",
+      "to": "Node26",
+      "label": "Linha 41"
+    },
+    {
+      "from": "Node26",
+      "to": "Node27",
+      "label": "Linha 42"
+    },
+    {
+      "from": "Node27",
+      "to": "Node28",
+      "label": "Linha 43"
+    },
+    {
+      "from": "Node28",
+      "to": "Node29",
+      "label": "Linha 45"
+    },
+    {
+      "from": "Node29",
+      "to": "Node30",
+      "label": "Linha 46"
+    },
+    {
+      "from": "Node30",
+      "to": "Node31",
+      "label": "Linha 48"
+    },
+    {
+      "from": "Node31",
+      "to": "Node32",
+      "label": "Linha 50"
+    },
+    {
+      "from": "Node32",
+      "to": "Node33",
+      "label": "Linha 51"
+    },
+    {
+      "from": "Node33",
+      "to": "Node34",
+      "label": "Linha 52"
+    },
+    {
+      "from": "Node34",
+      "to": "Node35",
+      "label": "Linha 53"
+    },
+    {
+      "from": "Node35",
+      "to": "Node36",
+      "label": "Linha 54"
+    },
+    {
+      "from": "Node36",
+      "to": "Node37",
+      "label": "Linha 55"
+    },
+    {
+      "from": "Node37",
+      "to": "Node38",
+      "label": "Encerramento"
+    },
+    {
+      "from": "Node38",
+      "to": "Node39",
+      "label": "Linha 57"
+    },
+    {
+      "from": "Node39",
+      "to": "Node40",
+      "label": "Encerramento"
+    },
+    {
+      "from": "Node40",
+      "to": "Node41",
+      "label": "Linha 60"
+    },
+    {
+      "from": "Node41",
+      "to": "Node42",
+      "label": "Linha 61"
+    }
+  ]
+}

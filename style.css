@@ -1,0 +1,194 @@
+
+/* Geral */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px 40px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+nav {
+  margin: 30px 0;
+  text-align: center;
+}
+
+nav button {
+  padding: 12px 25px;
+  margin: 0 15px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+nav button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+nav button:active {
+  transform: scale(0.98);
+}
+
+main {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para o SVG */
+svg {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* Estilo para os nós */
+.type-start rect {
+  fill: #86c5da;
+  stroke: #444;
+  stroke-width: 2px;
+  border-radius: 4px;
+}
+
+.type-end rect {
+  fill: #f4a261;
+  stroke: #444;
+  stroke-width: 2px;
+  border-radius: 4px;
+}
+
+/* Estilo para as arestas */
+.edgePath path {
+  stroke: #444;
+  fill: none;
+  stroke-width: 2px;
+  transition: stroke 0.3s ease;
+}
+
+.edgePath path:hover {
+  stroke: #4CAF50;
+  stroke-width: 3px;
+}
+
+.edgeLabel {
+  font-size: 14px;
+  font-weight: bold;
+  fill: #444;
+  text-transform: capitalize;
+  transition: fill 0.3s ease;
+}
+
+.edgeLabel:hover {
+  fill: #4CAF50;
+}
+
+/* Estilo básico para os nós com a classe 'type-node' */
+.type-node rect {
+  fill: #e0e0e0; /* Cor de fundo suave para o nó */
+  stroke: #333;  /* Cor da borda */
+  stroke-width: 2px; /* Largura da borda */
+  border-radius: 6px; /* Bordas arredondadas */
+  transition: all 0.3s ease; /* Transições suaves para as interações */
+}
+
+/* Efeito de hover no nó */
+.type-node rect:hover {
+  fill: #81c784; /* Cor de fundo quando o mouse está sobre o nó */
+  stroke: #2e7d32; /* Cor da borda no hover */
+  stroke-width: 3px; /* Aumenta a largura da borda no hover */
+}
+
+/* Estilo do texto dentro do nó */
+.type-node text {
+  font-size: 14px; /* Tamanho do texto */
+  font-weight: 600; /* Peso do texto */
+  fill: #333; /* Cor do texto */
+  transition: all 0.3s ease; /* Transição suave para o texto */
+  text-align: center;
+}
+
+/* Alterando a cor do texto no hover */
+.type-node rect:hover + text {
+  fill: #ffffff; /* Cor do texto ao passar o mouse sobre o nó */
+  text-align: center;
+}
+
+/* Estilo para rótulos de nós especiais (por exemplo, tipo de nó específico) */
+.type-node.special rect {
+  text-align: center;
+  fill: #ffcc00; /* Cor de fundo especial */
+  stroke: #ff9800; /* Cor da borda especial */
+}
+
+.type-node.special text {
+  fill: #ff5722; /* Cor do texto especial */
+}
+
+/* Efeito de destaque para nós ativos */
+.type-node.active rect {
+  fill: #1976d2; /* Cor de fundo para nó ativo */
+  stroke: #1565c0; /* Cor da borda para nó ativo */
+}
+
+.type-node.active text {
+  fill: #ffffff; /* Texto branco para nó ativo */
+}
+
+/* Estilos para nós inativos */
+.type-node.inactive rect {
+  fill: #bdbdbd; /* Cor de fundo para nó inativo */
+  stroke: #757575; /* Cor da borda para nó inativo */
+}
+
+.type-node.inactive text {
+  fill: #9e9e9e; /* Cor do texto para nó inativo */
+}
+
+
+/* Melhorias para responsividade */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 15px;
+  }
+
+  nav button {
+    font-size: 14px;
+    padding: 8px 18px;
+    margin: 0 8px;
+  }
+
+  svg {
+    height: 400px;
+  }
+
+  main {
+    padding: 15px;
+  }
+}
